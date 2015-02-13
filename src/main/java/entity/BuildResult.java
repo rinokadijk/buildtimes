@@ -19,7 +19,7 @@ public class BuildResult {
     private Date date;
     private String scriptName;
     private boolean succes;
-    private String user;
+    private String userName;
 
     public BuildResult() {
         // Required by JAXB
@@ -28,7 +28,7 @@ public class BuildResult {
     public BuildResult(String name, int duration, Date date, String user, boolean succes) {
         this.duration = duration;
         this.date = date;
-        this.user = user;
+        this.userName = user;
         this.scriptName = name;
         this.succes = succes;
     }
@@ -49,8 +49,8 @@ public class BuildResult {
         return succes;
     }
 
-    public String getUser() {
-        return user;
+    public String getUserName() {
+        return userName;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class BuildResult {
                 ", date=" + date +
                 ", scriptName='" + scriptName + '\'' +
                 ", succes=" + succes +
-                ", user='" + user + '\'' +
+                ", user='" + userName + '\'' +
                 '}';
     }
 }
