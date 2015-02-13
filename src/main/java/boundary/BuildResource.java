@@ -1,12 +1,15 @@
 package boundary;
 
 import control.BuildService;
+import entity.BuildResult;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
+import java.util.Date;
+import java.util.List;
 
 @Path("")
 public class BuildResource {
@@ -17,17 +20,15 @@ public class BuildResource {
     @GET
     @Path("build")
     public Response saveBuild(@QueryParam(value = "script") String scriptName, @QueryParam(value = "duration") int duration, @QueryParam(value = "user") String userName, @QueryParam(value = "failure") boolean isFailure) {
-        Build build = new Build(scriptName, userName, duration, !isFailure);
+        BuildResult build = new BuildResult(scriptName, duration, new Date(), userName, !isFailure);
         buildService.save(build);
         return Response.ok().build();
     }
 
     @GET
-    @Path("build/all")
-    public Response getAllBuilds() {
-        Build build = new Build();
-        buildService.save(build);
-        return Response.ok().build();
+    @Path("builds")
+    public List<BuildResult> getAllBuilds() {
+        return buildService.findAll();
     }
 
 }

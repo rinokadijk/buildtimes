@@ -2,16 +2,12 @@
 package control;
 
 import boundary.Build;
-import entity.Mood;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
+import entity.BuildResult;
+
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 @Stateless
 public class BuildService {
@@ -19,12 +15,12 @@ public class BuildService {
     @PersistenceContext
     private EntityManager em;
 
-    public void save(Build build) {
+    public void save(BuildResult build) {
         em.persist(build);
     }
 
-    public List<Build> findAll() {
-        return em.createQuery("select b from Build b", Build.class).getResultList();
+    public List<BuildResult> findAll() {
+        return em.createQuery("select b from BuildResult b", BuildResult.class).getResultList();
     }
 
 }
