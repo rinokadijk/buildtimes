@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html ng-app="wastedHoursApp">
+<html ng-app="wastedTimeApp">
     <head>
-        <title>Wasted hours</title>
+        <title>Wasted time</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="css/normalize.css" rel="stylesheet" type="text/css"/>
@@ -11,11 +11,21 @@
     </head>
     <body>
         <div class="wrapper">
-            <h1>Wasted hours</h1>
-            <div ng-controller="WastedHoursPerScriptCtrl">
-                <h2>Time scripts took to run over time</h2>
+            <h1>Wasted time</h1>
+            <div ng-controller="WastedTimePerScriptCtrl">
+                <h2>Time wasted on build scripts</h2>
                 <canvas id="line" 
                         class="chart chart-line" 
+                        data="data" 
+                        labels="labels"
+                        legend="true"
+                        series="series">
+                </canvas>
+            </div>
+            <div ng-controller="WastedTimePerScriptCumulativeCtrl">
+                <h2>Cumulative time wasted per script</h2>
+                <canvas id="bar" 
+                        class="chart chart-bar" 
                         data="data" 
                         labels="labels"
                         legend="true"

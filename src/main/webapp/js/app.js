@@ -1,11 +1,11 @@
-var app = angular.module('wastedHoursApp', ['chart.js']);
+var app = angular.module('wastedTimeApp', ['chart.js']);
 
 app.run(function ($rootScope) {
     'use strict';
     $rootScope.resourcePath = '/buildtimes/resources/';
 });
 
-app.controller('WastedHoursPerScriptCtrl', function ($scope, $rootScope, $http) {
+app.controller('WastedTimePerScriptCtrl', function ($scope, $rootScope, $http) {
     'use strict';
 
     var resourceUrl = $rootScope.resourcePath + 'builds';
@@ -17,15 +17,36 @@ app.controller('WastedHoursPerScriptCtrl', function ($scope, $rootScope, $http) 
         method: 'GET',
         url: resourceUrl
     }).success(function (data) {
-        console.log(data);
         $scope.data = [data.map(function (run) {
            return run.duration; 
         })];
         $scope.labels = data.map(function (run) {
-           return run.id; 
+           return run.date; 
         });
-        console.log($scope.labels);
-        console.log($scope.data);
+    }).error(function (data) {
+        // ignore
+    });
+});
+
+app.controller('WastedTimePerScriptCumulativeCtrl', function ($scope, $rootScope, $http) {
+    'use strict';
+
+    var resourceUrl = $rootScope.resourcePath + 'builds/cumulative';
+
+    $scope.series = [];
+    $scope.labels = ['Cumulative time wasted per script'];
+
+    $http({
+        method: 'GET',
+        url: resourceUrl
+    }).success(function (data) {
+        var durationsPerScript = data.durationPerScript.entry;
+        $scope.data = durationsPerScript.map(function (dps) {
+           return [dps.value]; 
+        });
+        $scope.series = durationsPerScript.map(function (dps) {
+           return dps.key; 
+        });
     }).error(function (data) {
         // ignore
     });

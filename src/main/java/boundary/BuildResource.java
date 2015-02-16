@@ -10,6 +10,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import static java.util.stream.Collectors.*;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -37,4 +39,23 @@ public class BuildResource {
         return buildService.findAll();
     }
 
+    @GET
+    @Path("builds/cumulative")
+    @Produces(MediaType.APPLICATION_JSON)
+    public CumulativeResult getDurationGroupedByScriptName() {
+        Map<String, Integer> buildsByScriptName = buildService.findAll()
+                .stream()
+                .collect(
+                        groupingBy(
+                                BuildResult::getScriptName,
+                                reducing(
+                                        0,
+                                        BuildResult::getDuration,
+                                        Integer::sum
+                                )
+                        )
+                );
+        return new CumulativeResult(buildsByScriptName);
+    }
+    
 }
