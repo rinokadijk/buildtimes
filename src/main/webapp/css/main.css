@@ -1,0 +1,9 @@
+.clear {
+    clear: both;
+}
+
+.wrapper {
+    width: 540px;
+    margin: 0px auto;
+    text-align: center;
+}

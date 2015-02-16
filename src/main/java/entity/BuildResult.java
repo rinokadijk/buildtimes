@@ -15,7 +15,7 @@ public class BuildResult {
     @GeneratedValue
     private Long id;
     private int duration;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     private String scriptName;
     private boolean succes;
